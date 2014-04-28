@@ -48,9 +48,12 @@
                         <execution>
                             <phase>install</phase>
                             <configuration>
-                                <tasks>
+                                <tasks if="minecraft-server-dir">
                                     <copy todir="${minecraft-server-dir}/plugins">
                                         <fileset dir="${basedir}/target" includes="**/*.jar" />
+                                    </copy>
+                                    <copy todir="${minecraft-server-dir}">
+                                        <fileset dir="${basedir}/src/main/resources" includes="program.js" />
                                     </copy>
                                 </tasks>
                             </configuration>
