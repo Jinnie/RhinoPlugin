@@ -1,0 +1,16 @@
+name: RhinoPlugin
+main: org.jinnie.mc.RhinoPlugin
+version: 1.0
+
+commands:
+
+   load:
+         description: loads and runs a default script
+         usage: /<command>
+         permission: <plugin name>.load
+         permission-message: You don't have <permission>
+   eval:
+         descroption: evals command line parameter
+         usage: /<command>
+         permission: <plugin name>.load
+         permission-message: You don't have <permission>
