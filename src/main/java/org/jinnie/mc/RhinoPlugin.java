@@ -47,9 +47,14 @@ public class RhinoPlugin extends JavaPlugin implements Listener {
                 ScriptEngine engine =
                         new ScriptEngineManager().getEngineByName("javascript");
                 Bindings bindings = getCommonBindings(sender);
-                getLogger().info("Trying to run js from file");
-                Object result = engine.eval(reader, bindings);
-                sender.sendMessage((String) result);
+                if (args.length >= 1){
+                    bindings.put("args", args);
+                    getLogger().info("Trying to run js from file");
+                    Object result = engine.eval(reader, bindings);
+                    sender.sendMessage((String) result);
+                } else {
+                    sender.sendMessage("Usage /load figurename");
+                }
             } catch (ScriptException e) {
                 e.printStackTrace();
             } catch (FileNotFoundException e) {
@@ -66,7 +71,7 @@ public class RhinoPlugin extends JavaPlugin implements Listener {
         bindings.put("player", sender);
         bindings.put("world", sender instanceof Player ? ((Player) sender).getWorld():null);
         bindings.put("location", sender instanceof Player ? ((Player) sender).getLocation():null);
-        bindings.put("DIRT", Material.DIRT);
+        bindings.put("Material", Material.AIR);
         return bindings;
     }
 }
