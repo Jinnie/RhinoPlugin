@@ -102,6 +102,61 @@ draw["sphere"] = function() {
    }
 }
 
+draw["lake"] = function() {
+   var loc = location;
+   var startX=loc.blockX;
+   var startZ = loc.blockZ;
+   var maxSize = 30;
+
+   for (var i = 0; i < maxSize; i+=2) {
+      var x = startX - maxSize/2 + i;
+      for (var j = 0; j < maxSize; j+=2){
+         var z = startZ - maxSize/2 + j;
+         if (surrounded(x, z, maxSize)) {
+            loc.setX(x);
+            loc.setZ(z);
+            world.getBlockAt(loc).type = Material.DIRT;
+         }
+      }
+   }
+
+   function surrounded(x, z, max){
+       var loc = location;
+       loc.setX(x); loc.setZ(z);
+       var edges=0;
+       for(var i=0; i<max/2; i++){
+          loc.setX(x+i);
+          if(world.getBlockAt(loc).type != Material.AIR){
+             edges++;
+             break;
+          }
+       }
+       for(var i=0; i<max/2; i--){
+          loc.setX(x+i);
+          if(world.getBlockAt(loc).type != Material.AIR){
+             edges++;
+             break;
+          }
+       }
+       loc.setX(x);
+       for(var i=0; i<max/2; i++){
+          loc.setZ(z+i);
+          if(world.getBlockAt(loc).type != Material.AIR){
+             edges++;
+             break;
+          }
+       }
+       for(var i=0; i<max/2; i--){
+          loc.setZ(z+i);
+          if(world.getBlockAt(loc).type != Material.AIR){
+             edges++;
+             break;
+          }
+       }
+       return edges==4;
+   }
+}
+
 if(draw[args[0]]) {
    draw[args[0]](args[1]);
 } else {
